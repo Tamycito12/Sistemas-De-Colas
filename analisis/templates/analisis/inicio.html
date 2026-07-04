@@ -1,0 +1,39 @@
+{% extends 'analisis/base.html' %}
+
+{% block titulo %}Inicio - Sistema de Colas{% endblock %}
+
+{% block contenido %}
+<div class="text-center mb-5">
+    <h1 class="display-6">Sistema de Análisis de Colas</h1>
+    <p class="lead text-muted">Calcula e interpreta el comportamiento de sistemas de espera usando teoría de colas.</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 p-4 text-center">
+            <i class="bi bi-person fs-1 text-warning mb-3"></i>
+            <h5>Modelo M/M/1</h5>
+            <p class="text-muted">Un solo servidor. Ideal para colas simples como una caja única.</p>
+            <a href="{% url 'mm1' %}" class="btn btn-outline-primary mt-auto">Calcular M/M/1</a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 p-4 text-center">
+            <i class="bi bi-people fs-1 text-warning mb-3"></i>
+            <h5>Modelo M/M/c</h5>
+            <p class="text-muted">Múltiples servidores en paralelo, como varias cajas o ventanillas.</p>
+            <a href="{% url 'mmc' %}" class="btn btn-outline-primary mt-auto">Calcular M/M/c</a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 p-4 text-center">
+            <i class="bi bi-bar-chart fs-1 text-warning mb-3"></i>
+            <h5>Análisis</h5>
+            <p class="text-muted">Conoce el significado de cada indicador del sistema de colas.</p>
+            <a href="{% url 'analisis' %}" class="btn btn-outline-primary mt-auto">Ver análisis</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

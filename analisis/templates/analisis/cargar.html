@@ -1,0 +1,83 @@
+{% extends 'analisis/base.html' %}
+
+{% block titulo %}Cargar Datos - Sistema de Colas{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card p-4 mb-4">
+            <h3 class="mb-3"><i class="bi bi-file-earmark-arrow-up"></i> Cargar Datos (Excel / PDF)</h3>
+            <p class="text-muted">
+                Sube un archivo con los datos de varias personas (λ, μ, servidores) para calcular
+                el sistema de colas de cada una.
+            </p>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Archivo (.xlsx, .csv o .pdf)</label>
+                    <input type="file" class="form-control" name="archivo" accept=".xlsx,.csv,.pdf" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-upload"></i> Subir y calcular
+                </button>
+            </form>
+
+            {% if nombre_archivo %}
+            <div class="alert alert-success mt-3 mb-0">
+                Archivo recibido: <strong>{{ nombre_archivo }}</strong>
+                <br><small class="text-muted">(el cálculo se agregará más adelante)</small>
+            </div>
+            {% endif %}
+
+            {% if error %}
+            <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+            {% endif %}
+        </div>
+
+        <div class="card p-4">
+            <h5 class="mb-3">Resultados por persona</h5>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>λ</th>
+                            <th>μ</th>
+                            <th>Servidores</th>
+                            <th>ρ</th>
+                            <th>L</th>
+                            <th>Lq</th>
+                            <th>W</th>
+                            <th>Wq</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if resultados %}
+                            {% for fila in resultados %}
+                            <tr>
+                                <td>{{ fila.nombre }}</td>
+                                <td>{{ fila.lam }}</td>
+                                <td>{{ fila.mu }}</td>
+                                <td>{{ fila.servidores }}</td>
+                                <td>{{ fila.rho }}</td>
+                                <td>{{ fila.L }}</td>
+                                <td>{{ fila.Lq }}</td>
+                                <td>{{ fila.W }}</td>
+                                <td>{{ fila.Wq }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">
+                                    Aquí aparecerán los resultados una vez cargado el archivo.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
