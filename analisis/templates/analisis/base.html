@@ -128,16 +128,15 @@
                 <!-- Menú desplegable -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownColas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Modelos de Colas
+                        Sistema de Colas
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownColas">
-                        <li><h6 class="dropdown-header">Cálculos</h6></li>
-                        <li><a class="dropdown-item" href="{% url 'mm1' %}">M/M/1 (un servidor)</a></li>
-                        <li><a class="dropdown-item" href="{% url 'mmc' %}">M/M/c (múltiples servidores)</a></li>
+                        <li><h6 class="dropdown-header">Herramientas</h6></li>
+                        <li><a class="dropdown-item" href="{% url 'cola' %}">Cola con Fichas</a></li>
+                        <li><a class="dropdown-item" href="{% url 'calculo' %}">Cálculo Matemático (Excel)</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><h6 class="dropdown-header">Análisis</h6></li>
                         <li><a class="dropdown-item" href="{% url 'analisis' %}">Análisis de resultados</a></li>
-                        <li><a class="dropdown-item" href="{% url 'cargar' %}">Cargar Excel / PDF</a></li>
                     </ul>
                 </li>
 

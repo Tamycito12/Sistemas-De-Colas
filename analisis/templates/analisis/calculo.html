@@ -1,0 +1,68 @@
+{% extends 'analisis/base.html' %}
+
+{% block titulo %}Cálculo Matemático - Sistema de Colas{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+
+        <div class="card p-4 mb-4">
+            <h3 class="mb-3"><i class="bi bi-file-earmark-spreadsheet"></i> Cálculo Matemático</h3>
+            <p class="text-muted">
+                Sube dos archivos Excel (.xlsx), cada uno con una columna llamada <strong>t</strong>:
+                uno con los tiempos de servicio y otro con los tiempos de llegada.
+                Se calculará el promedio del tiempo de servicio y se graficará la distribución exponencial.
+            </p>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Archivo de Tiempo de Servicio (.xlsx)</label>
+                        <input type="file" class="form-control" name="archivo_servicio" accept=".xlsx" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Archivo de Tiempo de Llegada (.xlsx)</label>
+                        <input type="file" class="form-control" name="archivo_llegada" accept=".xlsx" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-3">
+                    <i class="bi bi-graph-up"></i> Calcular y graficar
+                </button>
+            </form>
+
+            {% if error %}
+            <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+            {% endif %}
+        </div>
+
+        {% if resultado %}
+        <div class="card p-4 mb-4">
+            <h5 class="mb-3">Resumen de datos</h5>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td>Tiempo promedio de servicio</td>
+                        <td>{{ resultado.promedio_servicio }}</td>
+                    </tr>
+                    <tr>
+                        <td>Vector de Tiempo de Servicio</td>
+                        <td>{{ resultado.vector_servicio }}</td>
+                    </tr>
+                    <tr>
+                        <td>Vector de Tiempo de Llegada</td>
+                        <td>{{ resultado.vector_llegada }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card p-4 text-center">
+            <h5 class="mb-3">Distribución Exponencial</h5>
+            <img src="data:image/png;base64,{{ grafico_base64 }}" alt="Gráfico de distribución exponencial" class="img-fluid rounded">
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

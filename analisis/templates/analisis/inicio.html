@@ -11,19 +11,19 @@
 <div class="row g-4">
     <div class="col-md-4">
         <div class="card h-100 p-4 text-center">
-            <i class="bi bi-person fs-1 text-warning mb-3"></i>
-            <h5>Modelo M/M/1</h5>
-            <p class="text-muted">Un solo servidor. Ideal para colas simples como una caja única.</p>
-            <a href="{% url 'mm1' %}" class="btn btn-outline-primary mt-auto">Calcular M/M/1</a>
+            <i class="bi bi-ticket-perforated fs-1 text-warning mb-3"></i>
+            <h5>Cola con Fichas</h5>
+            <p class="text-muted">Registra personas, atiéndelas en orden (FIFO) y consulta el historial de fichas.</p>
+            <a href="{% url 'cola' %}" class="btn btn-outline-primary mt-auto">Ir a la cola</a>
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="card h-100 p-4 text-center">
-            <i class="bi bi-people fs-1 text-warning mb-3"></i>
-            <h5>Modelo M/M/c</h5>
-            <p class="text-muted">Múltiples servidores en paralelo, como varias cajas o ventanillas.</p>
-            <a href="{% url 'mmc' %}" class="btn btn-outline-primary mt-auto">Calcular M/M/c</a>
+            <i class="bi bi-file-earmark-spreadsheet fs-1 text-warning mb-3"></i>
+            <h5>Cálculo Matemático</h5>
+            <p class="text-muted">Sube tus archivos Excel de tiempo de servicio y de llegada y visualiza la distribución exponencial.</p>
+            <a href="{% url 'calculo' %}" class="btn btn-outline-primary mt-auto">Calcular</a>
         </div>
     </div>
 

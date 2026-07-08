@@ -1,0 +1,104 @@
+{% extends 'analisis/base.html' %}
+
+{% block titulo %}Cola con Fichas - Sistema de Colas{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+
+        <div class="card p-4 mb-4">
+            <h3 class="mb-3"><i class="bi bi-ticket-perforated"></i> Cola con Fichas</h3>
+            <p class="text-muted">
+                Registra personas en la cola y atiéndelas en orden de llegada (FIFO).
+                A cada persona atendida se le asigna una ficha y un tiempo de atención.
+            </p>
+
+            {% if mensaje %}
+            <div class="alert alert-success">{{ mensaje }}</div>
+            {% endif %}
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <form method="POST" class="d-flex gap-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="accion" value="registrar">
+                        <input type="text" name="nombre" class="form-control" placeholder="Nombre de la persona" required>
+                        <button type="submit" class="btn btn-primary text-nowrap">
+                            <i class="bi bi-person-plus"></i> Registrar
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="accion" value="atender">
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-check2-circle"></i> Atender siguiente
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="accion" value="reiniciar">
+                        <button type="submit" class="btn btn-secondary w-100" onclick="return confirm('¿Reiniciar todo el sistema de cola?');">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reiniciar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card p-4 h-100">
+                    <h5 class="mb-3">Personas en espera ({{ cola|length }}/{{ max_cola }})</h5>
+                    {% if cola %}
+                    <ol class="mb-0">
+                        {% for persona in cola %}
+                        <li>{{ persona }}</li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <p class="text-muted mb-0">La cola está vacía.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-4 h-100">
+                    <h5 class="mb-3">Historial de atención</h5>
+                    {% if historial %}
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Ficha</th>
+                                    <th>Tiempo (min)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for nombre, ficha, tiempo in historial %}
+                                <tr>
+                                    <td>{{ nombre }}</td>
+                                    <td>#{{ ficha }}</td>
+                                    <td>{{ tiempo }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">Todavía no se atendió a nadie.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
